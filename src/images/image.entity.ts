@@ -17,6 +17,9 @@ export class Image {
   @Column()
   user_id: number;
 
+  @Column()
+  image_url: string;
+
   @BeforeInsert()
   setUploadTime() {
     this.upload_time = new Date();

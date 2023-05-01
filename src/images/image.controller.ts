@@ -4,20 +4,33 @@ import {
   Post,
   Body,
   Param,
-  Put,
   Delete,
+  UploadedFile,
+  UseInterceptors,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { CreateImageDto, UpdateImageDto } from './image.dto';
 import { ImageService } from './image.service';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('images')
 export class ImageController {
   constructor(private imageService: ImageService) {}
 
   @Post('create')
-  create(@Body() createImageDto: CreateImageDto) {
-    return this.imageService.create(
+  @UseInterceptors(FileInterceptor('file'))
+  async create(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() createImageDto: CreateImageDto,
+  ) {
+    if (!file) {
+      throw new HttpException('No file uploaded', HttpStatus.BAD_REQUEST);
+    }
+    console.log(file, createImageDto);
+    return await this.imageService.create(
       createImageDto.user_id,
+      file,
       createImageDto.name,
       createImageDto.description,
     );
