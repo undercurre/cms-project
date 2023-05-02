@@ -28,6 +28,13 @@ export class UserService {
     });
   }
 
+  async findOneByName(username: string): Promise<User> {
+    console.log(username);
+    return await this.usersRepository.findOneBy({
+      username: username,
+    });
+  }
+
   update(id: number, username: string): Promise<UpdateResult> {
     console.log(id, username);
     return this.usersRepository.update(id, {

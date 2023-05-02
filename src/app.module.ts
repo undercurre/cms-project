@@ -13,6 +13,9 @@ import { User } from './users/user.entity';
 import { Image } from './images/image.entity';
 import { Comment } from './comments/comment.entity';
 import { join } from 'path';
+import { AuthModule } from './auth/auth.module';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
 
 @Dependencies(DataSource)
 @Module({
@@ -33,8 +36,15 @@ import { join } from 'path';
     UserModule,
     ImageModule,
     CommentModule,
+    AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+  ],
 })
 export class AppModule {}
