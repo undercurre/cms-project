@@ -9,11 +9,13 @@ import {
 } from '@nestjs/common';
 import { CreateUserDto, UpdateUserDto } from './user.dto';
 import { UserService } from './user.service';
+import { Public } from 'src/auth/public.decorator';
 
 @Controller('users')
 export class UserController {
   constructor(private userService: UserService) {}
 
+  @Public()
   @Post('create')
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(
