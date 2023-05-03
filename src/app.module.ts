@@ -14,8 +14,9 @@ import { Image } from './images/image.entity';
 import { Comment } from './comments/comment.entity';
 import { join } from 'path';
 import { AuthModule } from './auth/auth.module';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { TransformInterceptor } from './interceptor/transform.interceptor';
 
 @Dependencies(DataSource)
 @Module({
@@ -44,6 +45,10 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_INTERCEPTOR, // 声明为全局拦截器
+      useClass: TransformInterceptor, // 使用 ResponseInterceptor
     },
   ],
 })
