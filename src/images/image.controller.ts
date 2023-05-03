@@ -27,7 +27,6 @@ export class ImageController {
     if (!file) {
       throw new HttpException('No file uploaded', HttpStatus.BAD_REQUEST);
     }
-    console.log(file, createImageDto);
     return await this.imageService.create(
       createImageDto.user_id,
       file,
@@ -41,6 +40,11 @@ export class ImageController {
     return await this.imageService.findOne(id);
   }
 
+  @Get('fineOneByUser')
+  async findOneByUser(@Param('id') id: number) {
+    return await this.imageService.findOneByUser(id);
+  }
+
   @Post('update')
   update(@Body() updateImageDto: UpdateImageDto) {
     return this.imageService.update(
@@ -52,7 +56,6 @@ export class ImageController {
 
   @Delete('delete')
   remove(@Param() id: number) {
-    console.log(id);
     return this.imageService.remove(id);
   }
 }

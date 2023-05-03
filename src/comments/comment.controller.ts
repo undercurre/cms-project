@@ -22,7 +22,6 @@ export class CommentController {
 
   @Delete('delete')
   remove(@Param() id: number) {
-    console.log(id);
     return this.commentService.remove(id);
   }
 }

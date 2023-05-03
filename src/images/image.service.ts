@@ -50,6 +50,12 @@ export class ImageService {
     });
   }
 
+  async findOneByUser(id: number): Promise<Image> {
+    return await this.imageRepository.findOneBy({
+      user_id: id,
+    });
+  }
+
   update(id: number, name: string, description: string): Promise<UpdateResult> {
     return this.imageRepository.update(id, {
       name: name,

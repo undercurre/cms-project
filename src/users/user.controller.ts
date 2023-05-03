@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { CreateUserDto, UpdateUserDto } from './user.dto';
 import { UserService } from './user.service';
-import { Public } from 'src/auth/public.decorator';
+import { Public } from '../auth/public.decorator';
 
 @Controller('users')
 export class UserController {
@@ -31,13 +31,11 @@ export class UserController {
 
   @Put('update')
   update(@Param() id: number, @Body() updateUserDto: UpdateUserDto) {
-    console.log(id, updateUserDto);
     return this.userService.update(id, updateUserDto.username);
   }
 
   @Delete('delete')
   remove(@Param() id: number) {
-    console.log(id);
     return this.userService.remove(id);
   }
 }

@@ -11,7 +11,6 @@ export class AppController {
   @Public()
   @Post('auth/login')
   async login(@Req() req) {
-    console.log('登陆', req);
     return this.authService.login(req.user);
   }
 
