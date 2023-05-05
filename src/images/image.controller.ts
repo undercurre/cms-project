@@ -42,7 +42,8 @@ export class ImageController {
 
   @Get('fineOneByUser')
   async findOneByUser(@Param('id') id: number) {
-    return await this.imageService.findOneByUser(id);
+    const res = await this.imageService.findOneByUser(id);
+    return res[0];
   }
 
   @Post('update')

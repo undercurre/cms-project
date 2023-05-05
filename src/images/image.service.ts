@@ -50,8 +50,8 @@ export class ImageService {
     });
   }
 
-  async findOneByUser(id: number): Promise<Image> {
-    return await this.imageRepository.findOneBy({
+  async findOneByUser(id: number): Promise<[Image[], number]> {
+    return await this.imageRepository.findAndCountBy({
       user_id: id,
     });
   }
