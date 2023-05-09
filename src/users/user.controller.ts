@@ -7,7 +7,7 @@ import {
   Put,
   Delete,
 } from '@nestjs/common';
-import { CreateUserDto, UpdateUserDto } from './user.dto';
+import { CreateUserDto, UpdateUserDto, WechatAuthDto } from './user.dto';
 import { UserService } from './user.service';
 import { Public } from '../auth/public.decorator';
 
@@ -37,5 +37,11 @@ export class UserController {
   @Delete('delete')
   remove(@Param() id: number) {
     return this.userService.remove(id);
+  }
+
+  @Public()
+  @Post('wechat/auth')
+  wechatAuth(@Body() wechatAuthDto: WechatAuthDto) {
+    return this.userService.wechatAuth(wechatAuthDto.code);
   }
 }

@@ -12,6 +12,24 @@ export class User {
   @Column()
   password: string;
 
+  @Column()
+  openid: string;
+
+  @Column()
+  session_key: string;
+
+  @Column()
+  unionid: string;
+
+  @Column()
+  access_token: string;
+
+  @Column()
+  expires_in: string;
+
+  @Column()
+  phone: string;
+
   async validatePassword(password: string): Promise<boolean> {
     return await bcrypt.compare(password, this.password);
   }

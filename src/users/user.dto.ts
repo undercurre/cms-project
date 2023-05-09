@@ -6,3 +6,7 @@ export class CreateUserDto {
 export class UpdateUserDto {
   readonly username: string;
 }
+
+export class WechatAuthDto {
+  readonly code: string;
+}
