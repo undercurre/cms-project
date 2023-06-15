@@ -1,3 +1,11 @@
+/*
+ * @Author: undercurre undercurre@163.com
+ * @Date: 2023-04-30 17:43:20
+ * @LastEditors: undercurre undercurre@163.com
+ * @LastEditTime: 2023-06-16 01:13:20
+ * @FilePath: \cms-project\src\users\user.service.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
@@ -52,6 +60,7 @@ export class UserService {
     const url = `https://api.weixin.qq.com/sns/jscode2session?appid=${APPID}&secret=${SECRET}&js_code=${code}&grant_type=authorization_code`;
     const response = await this.httpService.get(url).toPromise();
     const data = response.data;
+    console.log(data);
     this.httpService.get(url);
     user.username = data.openid;
     user.password = '827ccb0eea8a706c4c34a16891f84e7b';
