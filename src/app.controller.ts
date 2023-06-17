@@ -5,10 +5,12 @@ import {
   HttpCode,
   Post,
   Req,
+  Body,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Public } from './auth/public.decorator';
+import { WechatAuthDto } from './users/user.dto';
 
 @Controller()
 export class AppController {
@@ -20,6 +22,13 @@ export class AppController {
   @HttpCode(200)
   async login(@Req() req) {
     return this.authService.login(req.user);
+  }
+
+  @Public()
+  @Post('wechat/login')
+  @HttpCode(200)
+  wechatAuth(@Body() wechatAuthDto: WechatAuthDto) {
+    return this.authService.wechatAuth(wechatAuthDto.code);
   }
 
   @UseGuards(AuthGuard('jwt'))

@@ -6,10 +6,12 @@ import { UserModule } from '../users/user.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [
     UserModule,
+    HttpModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
       secret: jwtConstants.secret,

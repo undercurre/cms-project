@@ -38,10 +38,4 @@ export class UserController {
   remove(@Param() id: number) {
     return this.userService.remove(id);
   }
-
-  @Public()
-  @Post('wechat/auth')
-  wechatAuth(@Body() wechatAuthDto: WechatAuthDto) {
-    return this.userService.wechatAuth(wechatAuthDto.code);
-  }
 }
