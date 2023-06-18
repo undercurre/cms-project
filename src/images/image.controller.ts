@@ -9,10 +9,12 @@ import {
   UseInterceptors,
   HttpException,
   HttpStatus,
+  Req,
 } from '@nestjs/common';
 import { CreateImageDto, UpdateImageDto } from './image.dto';
 import { ImageService } from './image.service';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { User } from '../users/user.entity';
 
 @Controller('images')
 export class ImageController {
@@ -21,14 +23,16 @@ export class ImageController {
   @Post('create')
   @UseInterceptors(FileInterceptor('file'))
   async create(
+    @Req() request: Express.Request,
     @UploadedFile() file: Express.Multer.File,
     @Body() createImageDto: CreateImageDto,
   ) {
+    const user = request.user as User;
     if (!file) {
       throw new HttpException('No file uploaded', HttpStatus.BAD_REQUEST);
     }
     return await this.imageService.create(
-      createImageDto.user_id,
+      user.id,
       file,
       createImageDto.name,
       createImageDto.description,
@@ -41,8 +45,9 @@ export class ImageController {
   }
 
   @Get('fineOneByUser')
-  async findOneByUser(@Param('id') id: number) {
-    const res = await this.imageService.findOneByUser(id);
+  async findOneByUser(@Req() request: Express.Request) {
+    const user = request.user as User;
+    const res = await this.imageService.findOneByUser(user.id);
     return res[0];
   }
 

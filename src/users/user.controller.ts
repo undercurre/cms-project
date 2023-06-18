@@ -7,7 +7,7 @@ import {
   Put,
   Delete,
 } from '@nestjs/common';
-import { CreateUserDto, UpdateUserDto, WechatAuthDto } from './user.dto';
+import { CreateUserDto, UpdateUserDto } from './user.dto';
 import { UserService } from './user.service';
 import { Public } from '../auth/public.decorator';
 

@@ -2,7 +2,7 @@
  * @Author: undercurre undercurre@163.com
  * @Date: 2023-05-02 17:13:20
  * @LastEditors: undercurre undercurre@163.com
- * @LastEditTime: 2023-06-17 18:01:32
+ * @LastEditTime: 2023-06-18 03:43:08
  * @FilePath: \cms-project\src\auth\auth.service.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -30,6 +30,17 @@ export class AuthService {
     return null;
   }
 
+  async validateUserByToken(token: string): Promise<User | null> {
+    try {
+      const payload = this.jwtService.verify(token);
+      const userId = payload.sub;
+      const user = await this.usersService.findOne(userId);
+      return user;
+    } catch (error) {
+      return null;
+    }
+  }
+
   async login(user: any) {
     const payload = { username: user.username, sub: user.id };
     return {
@@ -49,6 +60,7 @@ export class AuthService {
         // 如果在库里找到openid的用户，即刻登录该用户
         const payload = { username: userBeen.username, sub: userBeen.id };
         return {
+          id: userBeen.id,
           access_token: this.jwtService.sign(payload),
         };
       } else {
@@ -56,6 +68,7 @@ export class AuthService {
         const userNewn = await this.usersService.wechatCreate(data.openid);
         const payload = { username: userNewn.username, sub: userNewn.id };
         return {
+          id: userNewn.id,
           access_token: this.jwtService.sign(payload),
         };
       }

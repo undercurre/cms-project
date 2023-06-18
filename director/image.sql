@@ -1,6 +1,0 @@
-INSERT INTO `image` (`id`, `name`, `description`, `upload_time`, `user_id`, `image_url`) VALUES (5, 'test', '12345', '2023-05-01 23:03:04', 235, 'http://localhost:3000/uploads/2fb1e374-776a-4de3-bbc5-fb4263f589d7.png');
-INSERT INTO `image` (`id`, `name`, `description`, `upload_time`, `user_id`, `image_url`) VALUES (6, 'test1', '测试图1', '2023-05-02 01:14:09', 235, 'http://localhost:3000/uploads/2fb1e374-776a-4de3-bbc5-fb4263f589d7.png');
-INSERT INTO `image` (`id`, `name`, `description`, `upload_time`, `user_id`, `image_url`) VALUES (7, 'test1', '测试图1', '2023-05-08 01:29:39', 235, 'http://localhost:3000/uploads/549a3764-269e-4982-abd0-8981d05ceb5d.png');
-INSERT INTO `image` (`id`, `name`, `description`, `upload_time`, `user_id`, `image_url`) VALUES (8, '1213', '2312', '2023-05-08 02:04:30', 235, 'http://localhost:3000/uploads/c5d58968-1ac0-4c10-8f34-577db389924e.png');
-INSERT INTO `image` (`id`, `name`, `description`, `upload_time`, `user_id`, `image_url`) VALUES (9, '测试123', '8999', '2023-05-08 02:07:56', 235, 'http://localhost:3000/uploads/9c86f1c7-e56a-4377-8376-7811de9f1d57.jpg');
-INSERT INTO `image` (`id`, `name`, `description`, `upload_time`, `user_id`, `image_url`) VALUES (10, '冲击波', '我2321', '2023-05-08 02:16:01', 235, 'http://localhost:3000/uploads/d387b2c3-3668-46bb-9dfd-3728b9fbf660.png');

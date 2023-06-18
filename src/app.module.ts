@@ -1,4 +1,9 @@
-import { Dependencies, Module } from '@nestjs/common';
+import {
+  Dependencies,
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+} from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -17,6 +22,7 @@ import { AuthModule } from './auth/auth.module';
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { TransformInterceptor } from './interceptor/transform.interceptor';
+import { AuthMiddleware } from './middleware/auth.middleware';
 
 @Dependencies(DataSource)
 @Module({
@@ -52,4 +58,8 @@ import { TransformInterceptor } from './interceptor/transform.interceptor';
     },
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).forRoutes('*'); // 注册中间件
+  }
+}
