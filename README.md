@@ -82,5 +82,5 @@ Nest is [MIT licensed](LICENSE).
 
 ```bash
 # build documents
-$ pnpm docs
+$ npx compodoc -p tsconfig.json -s
 ```
