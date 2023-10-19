@@ -1,3 +1,7 @@
+# NestLirh
+
+使用 nestjs 作为主框架的 Node 服务
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
@@ -71,3 +75,12 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+## Docs
+
+文档由官方推荐的[compodoc](https://compodoc.app/guides/installation.html)生成
+
+```bash
+# build documents
+$ pnpm docs
+```
