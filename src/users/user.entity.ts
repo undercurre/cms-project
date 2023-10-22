@@ -34,3 +34,30 @@ export class User {
     return await bcrypt.compare(password, this.password);
   }
 }
+
+@Entity()
+export class UserWithoutSensitiveInfo {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
+  username: string;
+
+  @Column()
+  openid: string;
+
+  @Column()
+  session_key: string;
+
+  @Column()
+  unionid: string;
+
+  @Column()
+  access_token: string;
+
+  @Column()
+  expires_in: string;
+
+  @Column()
+  phone: string;
+}

@@ -9,7 +9,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
-import { User } from './user.entity';
+import { User, UserWithoutSensitiveInfo } from './user.entity';
 
 @Injectable()
 export class UserService {
@@ -35,8 +35,14 @@ export class UserService {
     return this.usersRepository.save(user);
   }
 
-  findAll(): Promise<User[]> {
-    return this.usersRepository.find();
+  async list(): Promise<UserWithoutSensitiveInfo[]> {
+    const usersWithoutSensitiveInfo = (await this.usersRepository.find()).map(
+      (user) => {
+        const { password, ...userWithoutPassword } = user; // 过滤掉密码
+        return userWithoutPassword;
+      },
+    );
+    return usersWithoutSensitiveInfo;
   }
 
   async findOne(id: number): Promise<User> {

@@ -10,3 +10,7 @@ export class UpdateUserDto {
 export class WechatAuthDto {
   readonly code: string;
 }
+
+export class ListUserRes {
+  
+}
