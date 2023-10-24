@@ -4,6 +4,7 @@ export class CreateUserDto {
 }
 
 export class UpdateUserDto {
+  readonly id: number;
   readonly username: string;
 }
 
@@ -11,6 +12,4 @@ export class WechatAuthDto {
   readonly code: string;
 }
 
-export class ListUserRes {
-  
-}
+export class ListUserRes {}
