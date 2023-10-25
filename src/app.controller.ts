@@ -24,6 +24,24 @@ export class AppController {
     return this.authService.login(req.user);
   }
 
+  @UseGuards(AuthGuard('jwt'))
+  @Post('auth/logout') // 你可以根据需求指定一个合适的URL路径
+  @HttpCode(200)
+  async logout(@Req() req) {
+    // 获取当前请求中的JWT令牌
+    const authorizationHeader = req.headers.authorization;
+    if (authorizationHeader) {
+      const [bearer, token] = authorizationHeader.split(' ');
+      if (token) {
+        // 调用AuthService中的logout方法将令牌添加到黑名单中
+        this.authService.logout(token);
+        return { message: '成功注销' };
+      } else {
+        return { message: '无法注销：令牌未提供' };
+      }
+    }
+  }
+
   @Public()
   @Post('wechat/login')
   @HttpCode(200)

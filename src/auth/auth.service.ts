@@ -20,6 +20,9 @@ export class AuthService {
     private readonly usersService: UserService,
   ) {}
 
+  // 假设有一个黑名单存储已注销的令牌
+  private tokenBlacklist: Set<string> = new Set();
+
   async validateUser(username: string, pass: string): Promise<any> {
     const user = await this.usersService.findOneByName(username);
     if (user && user.password === pass) {
@@ -33,12 +36,22 @@ export class AuthService {
   async validateUserByToken(token: string): Promise<User | null> {
     try {
       const payload = this.jwtService.verify(token);
+      // 检查令牌是否在黑名单中
+      if (this.tokenBlacklist.has(token)) {
+        throw new Error('Token has been blacklisted');
+      }
       const userId = payload.sub;
       const user = await this.usersService.findOne(userId);
       return user;
     } catch (error) {
-      return null;
+      throw new Error('Token is not valid');
     }
+  }
+
+  // 生成带有过期时间的 JWT 令牌
+  logout(token: string): void {
+    // 将令牌添加到黑名单
+    this.tokenBlacklist.add(token);
   }
 
   async login(user: any) {
