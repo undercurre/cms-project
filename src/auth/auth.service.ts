@@ -6,7 +6,7 @@
  * @FilePath: \cms-project\src\auth\auth.service.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../users/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { HttpService } from '@nestjs/axios';
@@ -34,17 +34,23 @@ export class AuthService {
   }
 
   async validateUserByToken(token: string): Promise<User | null> {
+    let isInBlacklist = false;
     try {
-      const payload = this.jwtService.verify(token);
       // 检查令牌是否在黑名单中
       if (this.tokenBlacklist.has(token)) {
-        throw new Error('Token has been blacklisted');
+        isInBlacklist = true;
+        throw new UnauthorizedException('Token has been blacklisted');
       }
+      const payload = this.jwtService.verify(token);
       const userId = payload.sub;
       const user = await this.usersService.findOne(userId);
       return user;
     } catch (error) {
-      throw new Error('Token is not valid');
+      if (isInBlacklist) {
+        throw new UnauthorizedException('Token has been blacklisted');
+      } else {
+        throw new UnauthorizedException('Token is not valid');
+      }
     }
   }
 

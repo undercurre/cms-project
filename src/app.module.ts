@@ -19,10 +19,11 @@ import { Image } from './images/image.entity';
 import { Comment } from './comments/comment.entity';
 import { join } from 'path';
 import { AuthModule } from './auth/auth.module';
-import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_GUARD, APP_INTERCEPTOR, APP_FILTER } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { TransformInterceptor } from './interceptor/transform.interceptor';
 import { AuthMiddleware } from './middleware/auth.middleware';
+import { HttpExceptionFilter } from './filter/http-exception.filter';
 
 @Dependencies(DataSource)
 @Module({
@@ -55,6 +56,10 @@ import { AuthMiddleware } from './middleware/auth.middleware';
     {
       provide: APP_INTERCEPTOR, // 声明为全局拦截器
       useClass: TransformInterceptor, // 使用 ResponseInterceptor
+    },
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter,
     },
   ],
 })
