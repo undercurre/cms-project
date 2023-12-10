@@ -22,7 +22,7 @@ export class UserService {
     const user = new User();
     user.username = username;
     user.password = password;
-    if (openid) user.openid = openid;
+    // if (openid) user.openid = openid;
     return this.usersRepository.save(user);
   }
 
@@ -30,8 +30,8 @@ export class UserService {
     const user = new User();
     user.username = openid;
     user.password = '827ccb0eea8a706c4c34a16891f84e7b'; //123456
-    user.openid = openid;
-    if (openid) user.openid = openid;
+    // user.openid = openid;
+    // if (openid) user.openid = openid;
     return this.usersRepository.save(user);
   }
 
@@ -45,7 +45,7 @@ export class UserService {
     return usersWithoutSensitiveInfo;
   }
 
-  async findOne(id: number): Promise<User> {
+  async findOne(id: string): Promise<User> {
     return await this.usersRepository.findOneBy({
       id: id,
     });
@@ -59,11 +59,11 @@ export class UserService {
 
   async findOneByOpenid(openid: string): Promise<User> {
     return await this.usersRepository.findOneBy({
-      openid: openid,
+      // openid: openid,
     });
   }
 
-  update(id: number, username: string): Promise<UpdateResult> {
+  update(id: string, username: string): Promise<UpdateResult> {
     return this.usersRepository.update(id, {
       username: username,
     });

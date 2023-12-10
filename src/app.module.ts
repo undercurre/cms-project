@@ -24,6 +24,8 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { TransformInterceptor } from './interceptor/transform.interceptor';
 import { AuthMiddleware } from './middleware/auth.middleware';
 import { HttpExceptionFilter } from './filter/http-exception.filter';
+import { TaskModule } from './tasks/task.module';
+import { Task } from './tasks/task.entity';
 
 @Dependencies(DataSource)
 @Module({
@@ -35,16 +37,17 @@ import { HttpExceptionFilter } from './filter/http-exception.filter';
       username: 'root',
       password: '123456',
       database: 'cms',
-      entities: [User, Image, Comment],
+      entities: [User, Task],
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'uploads'),
       serveRoot: '/uploads',
     }),
     UserModule,
-    ImageModule,
-    CommentModule,
+    // ImageModule,
+    // CommentModule,
     AuthModule,
+    TaskModule,
   ],
   controllers: [AppController],
   providers: [

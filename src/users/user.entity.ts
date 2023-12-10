@@ -1,10 +1,17 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  BeforeInsert,
+  OneToMany,
+} from 'typeorm';
 import * as bcrypt from 'bcryptjs';
+import { Task } from '../tasks/task.entity';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   username: string;
@@ -12,23 +19,16 @@ export class User {
   @Column()
   password: string;
 
-  @Column()
-  openid: string;
+  @Column({ nullable: true })
+  phone_number: string;
 
-  @Column()
-  session_key: string;
-
-  @Column()
-  unionid: string;
-
-  @Column()
-  access_token: string;
-
-  @Column()
-  expires_in: string;
-
-  @Column()
-  phone: string;
+  // 在插入之前触发，确保为id能通过触发器生成UUID
+  @BeforeInsert()
+  generateUUID() {
+    if (!this.id) {
+      this.id = null; // 为null是触发器默认条件，由数据库自己生成uuid
+    }
+  }
 
   async validatePassword(password: string): Promise<boolean> {
     return await bcrypt.compare(password, this.password);
@@ -38,26 +38,11 @@ export class User {
 @Entity()
 export class UserWithoutSensitiveInfo {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
   @Column()
   username: string;
 
   @Column()
-  openid: string;
-
-  @Column()
-  session_key: string;
-
-  @Column()
-  unionid: string;
-
-  @Column()
-  access_token: string;
-
-  @Column()
-  expires_in: string;
-
-  @Column()
-  phone: string;
+  phone_number: string;
 }

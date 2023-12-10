@@ -14,7 +14,7 @@ export class ImageService {
   ) {}
 
   async create(
-    id: number,
+    id: string,
     file: Express.Multer.File,
     name: string,
     description: string,
@@ -50,7 +50,7 @@ export class ImageService {
     });
   }
 
-  async findOneByUser(id: number): Promise<[Image[], number]> {
+  async findOneByUser(id: string): Promise<[Image[], number]> {
     return await this.imageRepository.findAndCountBy({
       user_id: id,
     });

@@ -10,6 +10,7 @@ import {
   HttpException,
   HttpStatus,
   Req,
+  Query,
 } from '@nestjs/common';
 import { CreateImageDto, UpdateImageDto } from './image.dto';
 import { ImageService } from './image.service';
@@ -40,7 +41,7 @@ export class ImageController {
   }
 
   @Get('fineOne')
-  async findOne(@Param('id') id: number) {
+  async findOne(@Query('id') id: number) {
     return await this.imageService.findOne(id);
   }
 
@@ -61,7 +62,7 @@ export class ImageController {
   }
 
   @Delete('delete')
-  remove(@Param() id: number) {
+  remove(@Query() id: number) {
     return this.imageService.remove(id);
   }
 }

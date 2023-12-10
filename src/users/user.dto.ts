@@ -4,7 +4,7 @@ export class CreateUserDto {
 }
 
 export class UpdateUserDto {
-  readonly id: number;
+  readonly id: string;
   readonly username: string;
 }
 

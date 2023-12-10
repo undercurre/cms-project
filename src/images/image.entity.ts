@@ -15,7 +15,7 @@ export class Image {
   upload_time: Date;
 
   @Column()
-  user_id: number;
+  user_id: string;
 
   @Column()
   image_url: string;

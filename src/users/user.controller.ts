@@ -26,7 +26,7 @@ export class UserController {
   }
 
   @Get('fineOne')
-  async findOne(@Param('id') id: number) {
+  async findOne(@Query('id') id: string) {
     return await this.userService.findOne(id);
   }
 

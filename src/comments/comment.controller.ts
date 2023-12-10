@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Query,
+} from '@nestjs/common';
 import { CreateCommentDto } from './comment.dto';
 import { CommentService } from './comment.service';
 
@@ -16,12 +24,12 @@ export class CommentController {
   }
 
   @Get('fineOne')
-  async findOne(@Param('id') id: number) {
+  async findOne(@Query('id') id: number) {
     return await this.commentService.findOne(id);
   }
 
   @Delete('delete')
-  remove(@Param() id: number) {
+  remove(@Query() id: number) {
     return this.commentService.remove(id);
   }
 }
