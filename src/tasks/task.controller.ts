@@ -8,9 +8,11 @@ import {
   Put,
   Delete,
   Query,
+  Req,
 } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { Task } from './task.entity';
+import { User } from '../users/user.entity';
 
 @Controller('tasks')
 export class TaskController {
@@ -27,13 +29,18 @@ export class TaskController {
   }
 
   @Get('findByUserId')
-  findByUserId(@Query('userId') userId: string): Promise<Task[]> {
-    return this.taskService.findByUserId(userId);
+  findByUserId(@Req() request: Express.Request): Promise<Task[]> {
+    const user = request.user as User;
+    return this.taskService.findByUserId(user.id);
   }
 
   @Post('create')
-  create(@Body() taskData: Partial<Task>): Promise<Task> {
-    return this.taskService.create(taskData);
+  create(
+    @Req() request: Express.Request,
+    @Body() taskData: Partial<Task>,
+  ): Promise<Task> {
+    const user = request.user as User;
+    return this.taskService.create({ ...taskData, user_id: user.id });
   }
 
   @Put('update')
