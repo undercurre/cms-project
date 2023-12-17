@@ -29,9 +29,14 @@ export class TaskController {
   }
 
   @Get('findByUserId')
-  findByUserId(@Req() request: Express.Request): Promise<Task[]> {
+  findByUserId(
+    @Req() request: Express.Request,
+    @Query() query: Partial<Task>,
+  ): Promise<Task[]> {
+    const obj: Partial<Task> = query;
     const user = request.user as User;
-    return this.taskService.findByUserId(user.id);
+    obj.user_id = user.id;
+    return this.taskService.findByUserId(obj);
   }
 
   @Post('create')

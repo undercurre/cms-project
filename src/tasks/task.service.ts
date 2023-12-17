@@ -19,8 +19,8 @@ export class TaskService {
     return this.taskRepository.findOneBy({ id });
   }
 
-  async findByUserId(userId: string): Promise<Task[]> {
-    return this.taskRepository.find({ where: { user_id: userId } });
+  async findByUserId(condition: Partial<Task>): Promise<Task[]> {
+    return this.taskRepository.find({ where: condition });
   }
 
   async create(taskData: Partial<Task>): Promise<Task> {
