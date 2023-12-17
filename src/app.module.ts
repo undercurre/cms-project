@@ -26,6 +26,7 @@ import { AuthMiddleware } from './middleware/auth.middleware';
 import { HttpExceptionFilter } from './filter/http-exception.filter';
 import { TaskModule } from './tasks/task.module';
 import { Task } from './tasks/task.entity';
+import { GcModule } from './gc/gc.module';
 
 @Dependencies(DataSource)
 @Module({
@@ -48,6 +49,7 @@ import { Task } from './tasks/task.entity';
     // CommentModule,
     AuthModule,
     TaskModule,
+    GcModule,
   ],
   controllers: [AppController],
   providers: [
