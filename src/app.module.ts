@@ -27,6 +27,7 @@ import { HttpExceptionFilter } from './filter/http-exception.filter';
 import { TaskModule } from './tasks/task.module';
 import { Task } from './tasks/task.entity';
 import { GcModule } from './gc/gc.module';
+import { StepModule } from './step/step.module';
 
 @Dependencies(DataSource)
 @Module({
@@ -50,6 +51,7 @@ import { GcModule } from './gc/gc.module';
     AuthModule,
     TaskModule,
     GcModule,
+    StepModule,
   ],
   controllers: [AppController],
   providers: [
