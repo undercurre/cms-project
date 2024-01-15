@@ -28,6 +28,8 @@ import { TaskModule } from './tasks/task.module';
 import { Task } from './tasks/task.entity';
 import { GcModule } from './gc/gc.module';
 import { StepModule } from './step/step.module';
+import { Question } from './question/question.entity';
+import { QuestionModule } from './question/question.module';
 
 @Dependencies(DataSource)
 @Module({
@@ -38,8 +40,8 @@ import { StepModule } from './step/step.module';
       port: 3306,
       username: 'root',
       password: '123456',
-      database: 'organizeme',
-      entities: [User, Task],
+      database: 'cms',
+      entities: [User, Task, Question],
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'uploads'),
@@ -52,6 +54,7 @@ import { StepModule } from './step/step.module';
     TaskModule,
     GcModule,
     StepModule,
+    QuestionModule,
   ],
   controllers: [AppController],
   providers: [
