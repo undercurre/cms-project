@@ -1,3 +1,4 @@
+import { UserQuestionRecordModule } from './userquestionrecord/userquestionrecord.module';
 import {
   Dependencies,
   MiddlewareConsumer,
@@ -30,6 +31,7 @@ import { GcModule } from './gc/gc.module';
 import { StepModule } from './step/step.module';
 import { Question } from './question/question.entity';
 import { QuestionModule } from './question/question.module';
+import { UserQuestionRecord } from './userquestionrecord/userquestionrecord.entity';
 
 @Dependencies(DataSource)
 @Module({
@@ -41,7 +43,7 @@ import { QuestionModule } from './question/question.module';
       username: 'root',
       password: '123456',
       database: 'cms',
-      entities: [User, Task, Question],
+      entities: [User, Task, Question, UserQuestionRecord],
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'uploads'),
@@ -55,6 +57,7 @@ import { QuestionModule } from './question/question.module';
     GcModule,
     StepModule,
     QuestionModule,
+    UserQuestionRecordModule,
   ],
   controllers: [AppController],
   providers: [
