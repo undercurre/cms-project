@@ -9,6 +9,7 @@ import {
   Put,
   Delete,
   Req,
+  Query,
 } from '@nestjs/common';
 import { UserQuestionRecordService } from './userquestionrecord.service';
 import { UserQuestionRecord } from './userquestionrecord.entity';
@@ -43,12 +44,14 @@ export class UserQuestionRecordController {
   }
 
   @Get('getByUserId')
-  getUserQuestionRecordByUserId(@Req() request: Express.Request) {
+  getUserQuestionRecordByUserId(
+    @Req() request: Express.Request,
+    @Query() query: Partial<UserQuestionRecord>,
+  ) {
     const user = request.user as User;
-
-    return this.userQuestionRecordService.getUserQuestionRecordByUserId(
-      user.id,
-    );
+    const obj: Partial<UserQuestionRecord> = query;
+    obj.id = user.id;
+    return this.userQuestionRecordService.getUserQuestionRecordByCondition(obj);
   }
 
   @Put(':id')

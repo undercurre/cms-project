@@ -31,12 +31,10 @@ export class UserQuestionRecordService {
     });
   }
 
-  async getUserQuestionRecordByUserId(
-    id: string,
-  ): Promise<UserQuestionRecord | undefined> {
-    return this.userQuestionRecordRepository.findOneBy({
-      userId: id,
-    });
+  async getUserQuestionRecordByCondition(
+    condition: Partial<UserQuestionRecord>,
+  ): Promise<UserQuestionRecord[]> {
+    return this.userQuestionRecordRepository.find({ where: condition });
   }
 
   async updateUserQuestionRecord(
