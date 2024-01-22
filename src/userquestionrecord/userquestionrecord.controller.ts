@@ -50,7 +50,7 @@ export class UserQuestionRecordController {
   ) {
     const user = request.user as User;
     const obj: Partial<UserQuestionRecord> = query;
-    obj.id = user.id;
+    obj.userId = user.id;
     return this.userQuestionRecordService.getUserQuestionRecordByCondition(obj);
   }
 
