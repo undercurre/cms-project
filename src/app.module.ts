@@ -1,3 +1,4 @@
+import { AnniversariesModule } from './anniversaries/anniversaries.module';
 import { UserQuestionRecordModule } from './userquestionrecord/userquestionrecord.module';
 import {
   Dependencies,
@@ -32,6 +33,7 @@ import { StepModule } from './step/step.module';
 import { Question } from './question/question.entity';
 import { QuestionModule } from './question/question.module';
 import { UserQuestionRecord } from './userquestionrecord/userquestionrecord.entity';
+import { AnniversariesEntity } from './anniversaries/anniversaries.entity';
 
 @Dependencies(DataSource)
 @Module({
@@ -43,7 +45,7 @@ import { UserQuestionRecord } from './userquestionrecord/userquestionrecord.enti
       username: 'root',
       password: '123456',
       database: 'cms',
-      entities: [User, Task, Question, UserQuestionRecord],
+      entities: [User, Task, Question, UserQuestionRecord, AnniversariesEntity],
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'uploads'),
@@ -58,6 +60,7 @@ import { UserQuestionRecord } from './userquestionrecord/userquestionrecord.enti
     StepModule,
     QuestionModule,
     UserQuestionRecordModule,
+    AnniversariesModule,
   ],
   controllers: [AppController],
   providers: [
