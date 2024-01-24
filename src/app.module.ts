@@ -14,11 +14,9 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 
 import { UserModule } from './users/user.module';
 import { ImageModule } from './images/image.module';
-import { CommentModule } from './comments/comment.module';
 
 import { User } from './users/user.entity';
 import { Image } from './images/image.entity';
-import { Comment } from './comments/comment.entity';
 import { join } from 'path';
 import { AuthModule } from './auth/auth.module';
 import { APP_GUARD, APP_INTERCEPTOR, APP_FILTER } from '@nestjs/core';
@@ -45,15 +43,21 @@ import { AnniversariesEntity } from './anniversaries/anniversaries.entity';
       username: 'root',
       password: '123456',
       database: 'cms',
-      entities: [User, Task, Question, UserQuestionRecord, AnniversariesEntity],
+      entities: [
+        User,
+        Task,
+        Question,
+        UserQuestionRecord,
+        AnniversariesEntity,
+        Image,
+      ],
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'uploads'),
       serveRoot: '/uploads',
     }),
     UserModule,
-    // ImageModule,
-    // CommentModule,
+    ImageModule,
     AuthModule,
     TaskModule,
     GcModule,

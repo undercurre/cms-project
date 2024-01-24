@@ -22,7 +22,7 @@ export class ImageService {
     const image = new Image();
     image.name = name;
     image.description = description;
-    image.user_id = id;
+    image.userId = id;
 
     // Generate a unique filename for the uploaded file
     const uniqueFilename = uuidv4() + extname(file.originalname);
@@ -52,7 +52,7 @@ export class ImageService {
 
   async findOneByUser(id: string): Promise<[Image[], number]> {
     return await this.imageRepository.findAndCountBy({
-      user_id: id,
+      userId: id,
     });
   }
 

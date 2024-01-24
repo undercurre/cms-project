@@ -1,27 +1,25 @@
 import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert } from 'typeorm';
 
-@Entity()
+@Entity('image')
 export class Image {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @Column()
+  userId: string;
+
+  @Column({ type: 'varchar', length: 255, nullable: false })
   name: string;
 
-  @Column()
+  @Column({ type: 'text', nullable: true })
   description: string;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  upload_time: Date;
-
-  @Column()
-  user_id: string;
-
-  @Column()
+  @Column({ type: 'text', nullable: false })
   image_url: string;
 
-  @BeforeInsert()
-  setUploadTime() {
-    this.upload_time = new Date();
-  }
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  created_at: Date;
+
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  updated_at: Date;
 }
