@@ -42,7 +42,7 @@ import { AnniversariesEntity } from './anniversaries/anniversaries.entity';
       port: 3306,
       username: 'root',
       password: '123456',
-      database: 'cms',
+      database: 'organizeme',
       entities: [
         User,
         Task,

@@ -4,7 +4,9 @@ import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { Image } from './image.entity';
 import { v4 as uuidv4 } from 'uuid';
 import { createWriteStream } from 'fs';
+import * as pathNode from 'path';
 import { extname } from 'path';
+import fs from 'fs';
 
 @Injectable()
 export class ImageService {
@@ -28,8 +30,12 @@ export class ImageService {
     const uniqueFilename = uuidv4() + extname(file.originalname);
 
     // Write the file to disk
-    const path = `./uploads/${uniqueFilename}`;
-    const writeStream = createWriteStream(path);
+    const uploadDir = pathNode.join(__dirname, 'uploads');
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir);
+    }
+    const absolutePath = pathNode.join(__dirname, 'uploads', uniqueFilename);
+    const writeStream = createWriteStream(absolutePath);
     writeStream.write(file.buffer);
     writeStream.end();
 
