@@ -14,9 +14,11 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 
 import { UserModule } from './users/user.module';
 import { ImageModule } from './images/image.module';
+import { ResourceModule } from './resource/resource.module';
 
 import { User } from './users/user.entity';
 import { Image } from './images/image.entity';
+import { Resource } from './resource/resource.entity';
 import { join } from 'path';
 import { AuthModule } from './auth/auth.module';
 import { APP_GUARD, APP_INTERCEPTOR, APP_FILTER } from '@nestjs/core';
@@ -50,6 +52,7 @@ import { AnniversariesEntity } from './anniversaries/anniversaries.entity';
         UserQuestionRecord,
         AnniversariesEntity,
         Image,
+        Resource,
       ],
     }),
     ServeStaticModule.forRoot({
@@ -58,6 +61,7 @@ import { AnniversariesEntity } from './anniversaries/anniversaries.entity';
     }),
     UserModule,
     ImageModule,
+    ResourceModule,
     AuthModule,
     TaskModule,
     GcModule,
