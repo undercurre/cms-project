@@ -34,6 +34,8 @@ import { Question } from './question/question.entity';
 import { QuestionModule } from './question/question.module';
 import { UserQuestionRecord } from './userquestionrecord/userquestionrecord.entity';
 import { AnniversariesEntity } from './anniversaries/anniversaries.entity';
+import { DietModule } from './diet/diet.module';
+import { Diet } from './diet/diet.entity';
 
 @Dependencies(DataSource)
 @Module({
@@ -53,6 +55,7 @@ import { AnniversariesEntity } from './anniversaries/anniversaries.entity';
         AnniversariesEntity,
         Image,
         Resource,
+        Diet,
       ],
     }),
     ServeStaticModule.forRoot({
@@ -69,6 +72,7 @@ import { AnniversariesEntity } from './anniversaries/anniversaries.entity';
     QuestionModule,
     UserQuestionRecordModule,
     AnniversariesModule,
+    DietModule,
   ],
   controllers: [AppController],
   providers: [
