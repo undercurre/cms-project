@@ -16,8 +16,8 @@ export class DietService {
 
   constructor(
     @InjectRepository(Diet)
-    private readonly httpService: HttpService,
     private readonly dietRepository: Repository<Diet>,
+    private readonly httpService: HttpService,
   ) {
     this.accessToken = '';
     this.baiduBaseUrl = 'https://aip.baidubce.com';
