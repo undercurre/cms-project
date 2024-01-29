@@ -1,4 +1,4 @@
-interface OAuthRes {
+export interface OAuthRes {
   refresh_token: string;
   expires_in: number;
   session_key: string;
@@ -7,7 +7,7 @@ interface OAuthRes {
   session_secret: string;
 }
 
-type AIRes =
+export type AIRes =
   | {
       result: Array<{
         probability: string;
@@ -22,3 +22,7 @@ type AIRes =
       error_code: number;
       error_msg: string;
     };
+
+export class AnalysisDto {
+  readonly image: string;
+}

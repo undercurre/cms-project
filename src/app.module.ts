@@ -46,7 +46,7 @@ import { Diet } from './diet/diet.entity';
       port: 3306,
       username: 'root',
       password: '123456',
-      database: 'organizeme',
+      database: 'cms',
       entities: [
         User,
         Task,
