@@ -5,6 +5,10 @@ import { AIRes, OAuthRes } from './diet.dto';
 import { Diet } from './diet.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import * as pathNode from 'path';
+import { v4 as uuidv4 } from 'uuid';
+import * as fs from 'fs';
+import { createWriteStream } from 'fs';
 
 @Injectable()
 export class DietService {
@@ -67,9 +71,67 @@ export class DietService {
     return res;
   }
 
-  async createDietRecord(recordData: Partial<Diet>): Promise<Diet> {
-    const record = this.dietRepository.create(recordData);
-    return await this.dietRepository.save(record);
+  async createDietRecord(
+    user_id: string,
+    recordData: Partial<
+      Omit<
+        Diet,
+        | 'image_url'
+        | 'name'
+        | 'id'
+        | 'user_id'
+        | 'calories'
+        | 'meal_time'
+        | 'created_at'
+        | 'updated_at'
+      >
+    >,
+    file: Express.Multer.File,
+  ): Promise<Diet> {
+    const diet = new Diet();
+    // Generate a unique filename for the uploaded file
+    const uniqueFilename = uuidv4() + pathNode.extname(file.originalname);
+
+    // Write the file to disk
+    const uploadDir = pathNode.join(__dirname, '../../', 'dietUploads');
+
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir);
+    }
+    const absolutePath = pathNode.join(
+      __dirname,
+      '../../',
+      'dietUploads',
+      uniqueFilename,
+    );
+    const writeStream = createWriteStream(absolutePath);
+    await new Promise<void>((resolve, reject) => {
+      writeStream.write(file.buffer);
+      writeStream.end(() => {
+        resolve();
+      });
+    });
+    if (recordData.description) diet.description = recordData.description;
+    // Set the URL of the image
+    diet.image_url = `http://81.71.85.68:9111/dietUploads/${uniqueFilename}`;
+    diet.user_id = user_id;
+    if (fs.existsSync(absolutePath)) {
+      const fileData = await fs.readFileSync(absolutePath);
+      const base64String = fileData.toString('base64');
+      const res = await this.queryDishAI(base64String);
+
+      const correct = res.data.result.reduce((max, current) => {
+        const currentProbability = parseFloat(current.probability);
+        const maxProbability = parseFloat(max.probability);
+
+        return currentProbability > maxProbability ? current : max;
+      });
+
+      diet.calories = correct.calorie;
+      diet.name = correct.name;
+      console.log(correct, diet);
+    }
+    return await this.dietRepository.save(diet);
   }
 
   async getUserDietRecord(condition: Partial<Diet>): Promise<Diet[]> {

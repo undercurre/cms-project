@@ -30,7 +30,7 @@ export class ImageService {
 
     // Write the file to disk
     const uploadDir = pathNode.join(__dirname, '../../', 'uploads');
-    console.log(uploadDir);
+
     if (!fs.existsSync(uploadDir)) {
       fs.mkdirSync(uploadDir);
     }

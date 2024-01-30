@@ -1,8 +1,20 @@
+import { FileInterceptor } from '@nestjs/platform-express';
 import { User } from '../users/user.entity';
 import { AnalysisDto } from './diet.dto';
 import { Diet } from './diet.entity';
 import { DietService } from './diet.service';
-import { Body, Controller, Post, Get, Req, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  Get,
+  Req,
+  Query,
+  UploadedFile,
+  HttpStatus,
+  HttpException,
+  UseInterceptors,
+} from '@nestjs/common';
 
 @Controller('diet')
 export class DietController {
@@ -15,15 +27,31 @@ export class DietController {
   }
 
   @Post('create')
+  @UseInterceptors(FileInterceptor('file'))
   async createDietRecord(
     @Req() request: Express.Request,
-    @Body() recordData: Partial<Diet>,
+    @UploadedFile() file: Express.Multer.File,
+    @Body()
+    recordData: Partial<
+      Omit<
+        Diet,
+        | 'image_url'
+        | 'name'
+        | 'id'
+        | 'user_id'
+        | 'calories'
+        | 'meal_time'
+        | 'created_at'
+        | 'updated_at'
+      >
+    >,
   ) {
     const user = request.user as User;
-    return this.DietService.createDietRecord({
-      ...recordData,
-      user_id: user.id,
-    });
+    console.log('用户', user.id);
+    if (!file) {
+      throw new HttpException('No file uploaded', HttpStatus.BAD_REQUEST);
+    }
+    return this.DietService.createDietRecord(user.id, recordData, file);
   }
 
   @Get('getByUserId')
