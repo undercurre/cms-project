@@ -9,6 +9,7 @@ import * as pathNode from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import * as fs from 'fs';
 import { createWriteStream } from 'fs';
+import * as FormData from 'form-data';
 
 @Injectable()
 export class DietService {
