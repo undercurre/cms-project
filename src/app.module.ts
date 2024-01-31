@@ -46,7 +46,7 @@ import { Diet } from './diet/diet.entity';
       port: 3306,
       username: 'root',
       password: '123456',
-      database: 'cms',
+      database: 'organizeme', // 测试环境：sit 生产环境：organizeme
       entities: [
         User,
         Task,
@@ -61,6 +61,10 @@ import { Diet } from './diet/diet.entity';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'uploads'),
       serveRoot: '/uploads',
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'dietUploads'),
+      serveRoot: '/dietUploads',
     }),
     UserModule,
     ImageModule,
