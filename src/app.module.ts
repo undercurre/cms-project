@@ -1,5 +1,6 @@
 import { AnniversariesModule } from './anniversaries/anniversaries.module';
 import { UserQuestionRecordModule } from './userquestionrecord/userquestionrecord.module';
+import { QuestionnaireModule } from './questionnaire/questionnaire.module';
 import {
   Dependencies,
   MiddlewareConsumer,
@@ -46,7 +47,7 @@ import { Diet } from './diet/diet.entity';
       port: 3306,
       username: 'root',
       password: '123456',
-      database: 'organizeme', // 测试环境：sit 生产环境：organizeme
+      database: 'cms', // 测试环境：cms 生产环境：organizeme
       entities: [
         User,
         Task,
@@ -76,6 +77,7 @@ import { Diet } from './diet/diet.entity';
     QuestionModule,
     UserQuestionRecordModule,
     AnniversariesModule,
+    QuestionnaireModule,
     DietModule,
   ],
   controllers: [AppController],
